@@ -1,52 +1,67 @@
-﻿using MinimalApiCrudExample.Models;
+﻿using CrudExampleDatabase;
+using CrudExampleDatabase.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace MinimalApiCrudExample.Services
 {
     public class UserService
     {
-        private List<User> _users { get; set; } = new();
-
-        public UserService()
+        private readonly CrudExampleDbContext _db;
+        public UserService(CrudExampleDbContext db)
         {
-            _users.Add(new User
-            {
-                Id = "52292945-abf0-45ae-a39a-af0f7746b05b",
-                Name = "Hector Salamanca",
-            });
+            _db = db;
         }
 
-        public IEnumerable<User> GetAllUsers() => _users;
+        public async Task<IEnumerable<User?>> GetAllUsers() => await _db.Users.ToListAsync();
 
-        public User? GetUser(string id)
-        {
-            return _users.FirstOrDefault(user => user.Id == id);
-        }
+        public async Task<User?> GetUser(string id) => await _db.Users.FindAsync(id);
 
-        public User AddUser(User user)
+        public async Task<User?> AddUser(User user)
         {
             user.Id = Guid.NewGuid().ToString();
-            _users.Add(user);
+            await _db.Users.AddAsync(user);
+            await _db.SaveChangesAsync();
             return user;
         }
 
-        public User? UpdateUser(User user)
+        public async Task<User?> UpdateUser(User user)
         {
-            var existingUser = _users.FirstOrDefault(u => u.Id == user.Id);
-            if (existingUser is not null)
+            var existingUser = await _db.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
+            if (existingUser is null)
             {
-                existingUser.Name = user.Name;
+                return null;
             }
+            existingUser.Name = user.Name;
+            existingUser.Age = user.Age;
+            existingUser.Email = user.Email;
+            existingUser.Password = user.Password;
+            _db.Users.Update(existingUser);
+            await _db.SaveChangesAsync();
             return existingUser;
         }
 
-        public User? DeleteUser(string id)
+        public async Task<User?> DeleteUser(string id)
         {
-            var existingUser = _users.FirstOrDefault(u => u.Id == id);
-            if (existingUser is not null)
+            var existingUser = await _db.Users.FirstOrDefaultAsync(u => u.Id == id);
+            if (existingUser is null)
             {
-                _users.Remove(existingUser);
+                return null;
             }
+            _db.Users.Remove(existingUser);
+            await _db.SaveChangesAsync();
             return existingUser;
+        }
+
+        public async Task<List<User>?> DeleteAllUsers()
+        {
+            var existingUsers = await _db.Users.ToListAsync();
+            if (existingUsers is null)
+            {
+                return null;
+            }
+            _db.Users.RemoveRange(existingUsers);
+            await _db.SaveChangesAsync();
+            return existingUsers;
         }
     }
 }

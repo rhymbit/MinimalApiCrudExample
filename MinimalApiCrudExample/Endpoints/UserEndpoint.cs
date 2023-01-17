@@ -1,4 +1,4 @@
-﻿using MinimalApiCrudExample.Models;
+﻿using CrudExampleDatabase.Models;
 using MinimalApiCrudExample.Services;
 
 namespace MinimalApiCrudExample.Endpoints;
@@ -9,34 +9,37 @@ public static class UserEndpoint
     {
         app.MapGet("/users", GetAllUsers);
         app.MapGet("/users/{id}", GetUser);
-        app.MapPost("/users/create", CreateUser);
-        app.MapPut("/users/update", UpdateUser);
+        app.MapPost("/users", CreateUser);
+        app.MapPut("/users", UpdateUser);
         app.MapDelete("/users/{id}", DeleteUser);
+        app.MapDelete("/users", DeleteAllUsers);
     }
 
-    public static IResult GetAllUsers(UserService userService)
+    public static async Task<IResult> GetAllUsers(UserService userService)
     {
-        return Results.Ok(userService.GetAllUsers());
+        var allUsers = await userService.GetAllUsers();
+        return Results.Ok(allUsers);
     }
 
-    public static IResult GetUser(string userId, UserService userService)
+    public static async Task<IResult> GetUser(string id, UserService userService)
     {
-        var user = userService.GetUser(userId);
+        var user = await userService.GetUser(id);
         if (user is null)
         {
-            return Results.NotFound(userId);
+            return Results.NotFound(id);
         }
         return Results.Ok(user);
     }
-
-    public static IResult CreateUser(User user, UserService userService)
+    
+    public static async Task<IResult> CreateUser(User user, UserService userService)
     {
-        return Results.Created($"/users/{user.Id}", userService.AddUser(user));
+        var newUser = await userService.AddUser(user);
+        return Results.Created($"/users/{user.Id}", newUser);
     }
 
-    public static IResult UpdateUser(User user, UserService userService)
+    public static async Task<IResult> UpdateUser(User user, UserService userService)
     {
-        var existingUser = userService.UpdateUser(user);
+        var existingUser = await userService.UpdateUser(user);
         if (existingUser is null)
         {
             return Results.NotFound(user.Id);
@@ -44,14 +47,20 @@ public static class UserEndpoint
         return Results.Accepted();
     }
 
-    public static IResult DeleteUser(UserService userService, string id)
+    public static async Task<IResult> DeleteUser(string id, UserService userService)
     {
-        var existingUser = userService.DeleteUser(id);
+        var existingUser = await userService.DeleteUser(id);
         if (existingUser is null)
         {
             return Results.NotFound(id);
 
         }
+        return Results.NoContent();
+    }
+
+    public static async Task<IResult> DeleteAllUsers(UserService userService)
+    {
+        await userService.DeleteAllUsers();
         return Results.NoContent();
     }
 }

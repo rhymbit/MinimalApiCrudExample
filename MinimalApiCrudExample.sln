@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinimalApiCrudExample", "MinimalApiCrudExample\MinimalApiCrudExample.csproj", "{9FFB9D51-5115-4B58-A3CF-53659E0D1606}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalApiCrudExample", "MinimalApiCrudExample\MinimalApiCrudExample.csproj", "{9FFB9D51-5115-4B58-A3CF-53659E0D1606}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrudExampleDatabase", "CrudExampleDatabase\CrudExampleDatabase.csproj", "{D8087B73-96A1-4315-B27A-0C0C6EACF78C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{9FFB9D51-5115-4B58-A3CF-53659E0D1606}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FFB9D51-5115-4B58-A3CF-53659E0D1606}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FFB9D51-5115-4B58-A3CF-53659E0D1606}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8087B73-96A1-4315-B27A-0C0C6EACF78C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8087B73-96A1-4315-B27A-0C0C6EACF78C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8087B73-96A1-4315-B27A-0C0C6EACF78C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8087B73-96A1-4315-B27A-0C0C6EACF78C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
