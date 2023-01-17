@@ -1,8 +1,4 @@
-﻿using CrudExampleDatabase;
-using CrudExampleDatabase.Models;
-using Microsoft.EntityFrameworkCore;
-
-namespace MinimalApiCrudExample.Services
+﻿namespace MinimalApiCrudExample.Services
 {
     public class UserService
     {
@@ -12,11 +8,11 @@ namespace MinimalApiCrudExample.Services
             _db = db;
         }
 
-        public async Task<IEnumerable<User?>> GetAllUsers() => await _db.Users.ToListAsync();
+        public async Task<IEnumerable<User>> GetAllUsers() => await _db.Users.ToListAsync();
 
         public async Task<User?> GetUser(string id) => await _db.Users.FindAsync(id);
 
-        public async Task<User?> AddUser(User user)
+        public async Task<User> AddUser(User user)
         {
             user.Id = Guid.NewGuid().ToString();
             await _db.Users.AddAsync(user);
@@ -26,18 +22,15 @@ namespace MinimalApiCrudExample.Services
 
         public async Task<User?> UpdateUser(User user)
         {
-            var existingUser = await _db.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
-            if (existingUser is null)
-            {
-                return null;
-            }
-            existingUser.Name = user.Name;
-            existingUser.Age = user.Age;
-            existingUser.Email = user.Email;
-            existingUser.Password = user.Password;
-            _db.Users.Update(existingUser);
-            await _db.SaveChangesAsync();
-            return existingUser;
+            var result = await _db.Users
+                .Where(u => u.Id == user.Id)
+                .ExecuteUpdateAsync(u => u
+                .SetProperty(x => x.Name, user.Name)
+                .SetProperty(x => x.Age, user.Age)
+                .SetProperty(x => x.Email, user.Email)
+                .SetProperty(x => x.Password, user.Password)
+            );
+            return result > 0 ? user : null;
         }
 
         public async Task<User?> DeleteUser(string id)
