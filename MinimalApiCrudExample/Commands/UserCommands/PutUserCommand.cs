@@ -1,10 +1,10 @@
 ﻿namespace MinimalApiCrudExample.Commands.UserCommands;
 
-public class CreateUserCommand : IRequest<UserResponseModel>
+public class PutUserCommand : IRequest<UserResponseModel>
 {
     public PutUserRequestModel UserRequest { get; }
-    
-    public CreateUserCommand(PutUserRequestModel userRequest)
+
+    public PutUserCommand(PutUserRequestModel userRequest)
     {
         UserRequest = userRequest;
     }

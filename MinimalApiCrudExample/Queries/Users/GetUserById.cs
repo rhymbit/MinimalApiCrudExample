@@ -1,12 +1,11 @@
-﻿namespace MinimalApiCrudExample.Queries.Users
-{
-    public class GetUserById : IRequest<UserResponse>
-    {
-        public string UserId { get; }
+﻿namespace MinimalApiCrudExample.Queries.Users;
 
-        public GetUserById(string id)
-        {
-            UserId = id;
-        }
+public class GetUserById : IRequest<UserResponseModel>
+{
+    public string UserId { get; }
+
+    public GetUserById(string id)
+    {
+        UserId = id;
     }
 }

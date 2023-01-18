@@ -1,19 +1,18 @@
-﻿namespace MinimalApiCrudExample.Handlers.UserHandlers
+﻿namespace MinimalApiCrudExample.Handlers.UserHandlers;
+
+public class PutUserCommandHandler : IRequestHandler<PutUserCommand, UserResponseModel?>
 {
-    public class PutUserCommandHandler : IRequestHandler<PutUserCommand, UserResponse?>
+    private readonly UserService _userService;
+
+    public PutUserCommandHandler(UserService userService)
     {
-        private readonly UserService _userService;
+        _userService = userService;
+    }
 
-        public PutUserCommandHandler(UserService userService)
-        {
-            _userService = userService;
-        }
-
-        public async ValueTask<UserResponse?> Handle(PutUserCommand request, CancellationToken cancellationToken)
-        {
-            var user = await _userService.UpdateUser(request.UserRequest.ToUser());
-            return user?.ToUserResponse();
-            
-        }
+    public async ValueTask<UserResponseModel?> Handle(PutUserCommand request, CancellationToken cancellationToken)
+    {
+        var user = await _userService.UpdateUser(request.UserRequest.ToUser());
+        return user?.ToUserResponse();
+        
     }
 }

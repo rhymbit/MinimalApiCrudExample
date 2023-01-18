@@ -1,7 +1,6 @@
 ﻿
-namespace MinimalApiCrudExample.Queries.Users
+namespace MinimalApiCrudExample.Queries.Users;
+
+public class GetAllUsersQuery : IRequest<List<UserResponseModel>>
 {
-    public class GetAllUsersQuery : IRequest<List<UserResponse>>
-    {
-    }
 }

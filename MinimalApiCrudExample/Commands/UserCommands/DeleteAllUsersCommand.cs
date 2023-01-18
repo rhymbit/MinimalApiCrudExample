@@ -1,6 +1,5 @@
-﻿namespace MinimalApiCrudExample.Commands.UserCommands
+﻿namespace MinimalApiCrudExample.Commands.UserCommands;
+
+public class DeleteAllUsersCommand : IRequest<List<UserResponseModel>>
 {
-    public class DeleteAllUsersCommand : IRequest<List<UserResponse>>
-    {
-    }
 }

@@ -1,11 +1,10 @@
-﻿namespace MinimalApiCrudExample.Commands.UserCommands
+﻿namespace MinimalApiCrudExample.Commands.UserCommands;
+
+public class DeleteUserByIdCommand : IRequest<UserResponseModel>
 {
-    public class DeleteUserByIdCommand : IRequest<UserResponse>
+    public string UserId { get; }
+    public DeleteUserByIdCommand(string id)
     {
-        public string UserId { get; }
-        public DeleteUserByIdCommand(string id)
-        {
-            UserId = id;
-        }
+        UserId = id;
     }
 }

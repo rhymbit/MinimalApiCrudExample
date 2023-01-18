@@ -1,11 +1,13 @@
 ﻿global using Microsoft.EntityFrameworkCore;
 global using Mediator;
+global using FluentValidation;
 global using CrudExampleDatabase;
 global using CrudExampleDatabase.Models;
 global using MinimalApiCrudExample.Services;
 global using MinimalApiCrudExample.Endpoints;
-global using MinimalApiCrudExample.Models.UserModel;
+global using MinimalApiCrudExample.Models.UserModels;
 global using MinimalApiCrudExample.ExtensionMethods;
 global using MinimalApiCrudExample.Queries.Users;
-global using MinimalApiCrudExample.Handlers.UserHandlers;
 global using MinimalApiCrudExample.Commands.UserCommands;
+global using MinimalApiCrudExample.Validators.UserValidators;
+global using MinimalApiCrudExample.Filters.UserValidatorFilters;
