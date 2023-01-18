@@ -13,10 +13,11 @@ public static class UserEndpoint
         app.MapDelete("/users", DeleteAllUsers);
     }
 
-    public static async Task<IResult> GetAllUsers(IMediator _mediator, CancellationToken ctoken)
+    public static async Task<IResult> GetAllUsers(IMediator _mediator, CancellationToken ctoken, ILoggerFactory logger)
     {
         var query = new GetAllUsersQuery();
         var result = await _mediator.Send(query, ctoken);
+        logger.CreateLogger("GetAllUsers").LogInformation("Getting All Users");
         return result != null ? Results.Ok(result) : Results.Ok(new());
     }
 
