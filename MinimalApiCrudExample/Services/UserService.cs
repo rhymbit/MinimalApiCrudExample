@@ -7,7 +7,6 @@ public class UserService
     {
         _db = db;
     }
-
     public async Task<IEnumerable<User>> GetAllUsers() => await _db.Users.ToListAsync();
 
     public async Task<User?> GetUser(string id) => await _db.Users.FindAsync(id);

@@ -1,16 +1,17 @@
-﻿
-namespace MinimalApiCrudExample.Endpoints;
+﻿namespace MinimalApiCrudExample.Endpoints;
 
 public static class UserEndpoint
 {
-    public static void MapUserEndponts(this WebApplication app)
+    public static RouteGroupBuilder MapUserEndpoints(this RouteGroupBuilder group)
     {
-        app.MapGet("/users", GetAllUsers);
-        app.MapGet("/users/{id}", GetUser);
-        app.MapPost("/users", AddUser).AddEndpointFilter<AddUserValidatorFilter>();
-        app.MapPut("/users", PutUser).AddEndpointFilter<PutUserValidatorFilter>();
-        app.MapDelete("/users/{id}", DeleteUser);
-        app.MapDelete("/users", DeleteAllUsers);
+        group.MapGet("/", GetAllUsers);
+        group.MapGet("/{id}", GetUser);
+        group.MapPost("/", AddUser).AddEndpointFilter<AddUserValidatorFilter>();
+        group.MapPut("/", PutUser).AddEndpointFilter<PutUserValidatorFilter>();
+        group.MapDelete("/{id}", DeleteUser);
+        group.MapDelete("/", DeleteAllUsers);
+
+        return group;
     }
 
     public static async Task<IResult> GetAllUsers(IMediator _mediator, CancellationToken ctoken)
@@ -27,9 +28,9 @@ public static class UserEndpoint
         return result != null ? Results.Ok(result) : Results.NotFound();
     }
 
-    public static async Task<IResult> AddUser(PutUserRequestModel user, IMediator _mediator, CancellationToken ctoken)
+    public static async Task<IResult> AddUser(AddUserRequestModel user, IMediator _mediator, CancellationToken ctoken)
     {
-        var command = new CreateUserCommand(user);
+        var command = new AddUserCommand(user);
         var results = await _mediator.Send(command, ctoken);
         return results != null ? Results.Created($"/users/{results.Id}", results) : Results.Problem();
     }

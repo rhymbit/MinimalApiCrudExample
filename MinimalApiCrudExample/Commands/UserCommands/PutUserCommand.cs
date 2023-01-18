@@ -2,10 +2,10 @@
 
 public class PutUserCommand : IRequest<UserResponseModel>
 {
-    public PutUserRequestModel UserRequest { get; }
+    public PutUserRequestModel Model { get; }
 
-    public PutUserCommand(PutUserRequestModel userRequest)
+    public PutUserCommand(PutUserRequestModel model)
     {
-        UserRequest = userRequest;
+        Model = model;
     }
 }

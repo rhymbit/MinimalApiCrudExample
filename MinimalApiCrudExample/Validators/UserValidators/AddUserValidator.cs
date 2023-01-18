@@ -1,6 +1,6 @@
 ﻿namespace MinimalApiCrudExample.Validators.UserValidators;
 
-public class AddUserValidator : AbstractValidator<PutUserRequestModel>
+public class AddUserValidator : AbstractValidator<AddUserRequestModel>
 {
     public AddUserValidator()
     {

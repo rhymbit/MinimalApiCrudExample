@@ -11,7 +11,7 @@ public class PutUserCommandHandler : IRequestHandler<PutUserCommand, UserRespons
 
     public async ValueTask<UserResponseModel?> Handle(PutUserCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userService.UpdateUser(request.UserRequest.ToUser());
+        var user = await _userService.UpdateUser(request.Model.ToUser());
         return user?.ToUserResponse();
         
     }

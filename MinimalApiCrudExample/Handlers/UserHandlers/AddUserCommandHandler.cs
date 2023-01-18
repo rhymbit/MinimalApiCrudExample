@@ -1,6 +1,6 @@
 ﻿namespace MinimalApiCrudExample.Handlers.UserHandlers;
 
-public class AddUserCommandHandler : IRequestHandler<CreateUserCommand, UserResponseModel?>
+public class AddUserCommandHandler : IRequestHandler<AddUserCommand, UserResponseModel?>
 {
     private readonly UserService _userService;
 
@@ -8,9 +8,9 @@ public class AddUserCommandHandler : IRequestHandler<CreateUserCommand, UserResp
     {
         _userService = userService;
     }
-    public async ValueTask<UserResponseModel?> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async ValueTask<UserResponseModel?> Handle(AddUserCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userService.AddUser(request.UserRequest.ToUser());
+        var user = await _userService.AddUser(request.Model.ToUser());
         return user?.ToUserResponse();
     }
 }

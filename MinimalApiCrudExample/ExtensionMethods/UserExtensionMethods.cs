@@ -2,14 +2,26 @@
 
 public static class UserExtensionMethods
 {
-    public static User ToUser(this PutUserRequestModel userRequest)
+    public static User ToUser(this AddUserRequestModel model)
     {
         return new()
         {
-            Name = userRequest.Name ?? "",
-            Age = userRequest.Age,
-            Email = userRequest.Email ?? "",
-            Password = userRequest.Password ?? ""
+            Name = model.Name ?? "",
+            Age = model.Age,
+            Email = model.Email ?? "",
+            Password = model.Password ?? ""
+        };
+    }
+
+    public static User ToUser(this PutUserRequestModel model)
+    {
+        return new()
+        {
+            Id = model.Id,
+            Name = model.Name ?? "",
+            Age = model.Age,
+            Email = model.Email ?? "",
+            Password = model.Password ?? ""
         };
     }
 
