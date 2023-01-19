@@ -3,6 +3,7 @@ global using Mediator;
 global using FluentValidation;
 global using CrudExampleDatabase;
 global using CrudExampleDatabase.Models;
+global using MinimalApiCrudExample.Middlewares;
 global using MinimalApiCrudExample.Services;
 global using MinimalApiCrudExample.Endpoints;
 global using MinimalApiCrudExample.Models.UserModels;

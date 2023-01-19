@@ -28,8 +28,12 @@ builder.Services.AddScoped<UserService>();
 
 var app = builder.Build();
 
+
 // Configure the HTTP request pipeline.
 app.UseHttpsRedirection();
+
+// Custom Middleware
+app.UseMiddleware<OperationCancelledMiddleware>();
 
 app.MapGroup("/api/users")
     .MapUserEndpoints();
@@ -51,5 +55,6 @@ app.MapGet("/", () =>
     });
 })
     .WithName("Home");
+
 
 app.Run();

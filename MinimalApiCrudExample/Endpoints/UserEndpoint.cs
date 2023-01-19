@@ -4,12 +4,12 @@ public static class UserEndpoint
 {
     public static RouteGroupBuilder MapUserEndpoints(this RouteGroupBuilder group)
     {
-        group.MapGet("/", GetAllUsers);
-        group.MapGet("/{id}", GetUser);
-        group.MapPost("/", AddUser).AddEndpointFilter<AddUserValidatorFilter>();
-        group.MapPut("/", PutUser).AddEndpointFilter<PutUserValidatorFilter>();
-        group.MapDelete("/{id}", DeleteUser);
-        group.MapDelete("/", DeleteAllUsers);
+        group.MapGet("/", GetAllUsers).WithName("GetAllUsers");
+        group.MapGet("/{id}", GetUser).WithName("GetUserById");
+        group.MapPost("/", AddUser).AddEndpointFilter<AddUserValidatorFilter>().WithName("AddUser");
+        group.MapPut("/", PutUser).AddEndpointFilter<PutUserValidatorFilter>().WithName("PutUser");
+        group.MapDelete("/{id}", DeleteUser).WithName("DeleteUserById");
+        group.MapDelete("/", DeleteAllUsers).WithName("DeleteAllUsers");
 
         return group;
     }
@@ -18,6 +18,7 @@ public static class UserEndpoint
     {
         var query = new GetAllUsersQuery();
         var result = await _mediator.Send(query, ctoken);
+        await Task.Delay(10_000, ctoken);
         return result != null ? Results.Ok(result) : Results.Ok(new());
     }
 
