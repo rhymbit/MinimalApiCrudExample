@@ -12,3 +12,4 @@ global using MinimalApiCrudExample.Queries.Users;
 global using MinimalApiCrudExample.Commands.UserCommands;
 global using MinimalApiCrudExample.Validators.UserValidators;
 global using MinimalApiCrudExample.Filters.UserValidatorFilters;
+global using MinimalApiCrudExample.BackgroundTasks.UserTasks;

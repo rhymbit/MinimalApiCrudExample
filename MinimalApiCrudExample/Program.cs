@@ -1,3 +1,6 @@
+using System.Resources;
+using System.Text.RegularExpressions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var dbPath = Path.Combine(
@@ -24,6 +27,9 @@ builder.Services.AddScoped<IValidator<PutUserRequestModel>, PutUserValidator>();
 builder.Services.AddMediator(options => options.ServiceLifetime = ServiceLifetime.Scoped);
 // Custom Services
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<UserCountingService>();
+builder.Services.AddHostedService<UserCountingServiceHostedService>();
+
 
 
 var app = builder.Build();
@@ -55,6 +61,4 @@ app.MapGet("/", () =>
     });
 })
     .WithName("Home");
-
-
 app.Run();
